@@ -41,14 +41,10 @@ jobs:
   1x-electron:
     <<: *defaults
     steps:
-      # restore application and Cypress binary before running the test command
-      - attach_workspace:
-          at: ~/
-    
+   
       # run all tests and pass group name (should be "1x-electron" in this case)
       - run: ls -la cypress
       - run: ls -la cypress/integration
-      - run:
       command: $(npm bin)/cypress run 
 
   2x-electron:
@@ -56,13 +52,10 @@ jobs:
     # tell CircleCI to execute this job on 2 machines simultaneously
     parallelism: 2
     steps:
-      - attach_workspace:
-          at: ~/
       # runs Cypress test in load balancing (parallel) mode
       # and groups them in Cypress Dashboard under name "4x-electron"
       - run: ls -la cypress
       - run: ls -la cypress/integration
-      - run:
       command: $(npm bin)/cypress run --parallel
 
   4x-electron:
@@ -70,11 +63,8 @@ jobs:
     # tell CircleCI to execute this job on 4 machines simultaneously
     parallelism: 4
     steps:
-      - attach_workspace:
-          at: ~/
       - run: ls -la cypress
       - run: ls -la cypress/integration
-      - run:
       command: $(npm bin)/cypress run --parallel
 
   # name this job differently to have it AFTER all electron jobs on dashboard
@@ -83,8 +73,6 @@ jobs:
     # execute this job on 2 CI machines
     parallelism: 2
     steps:
-      - attach_workspace:
-          at: ~/
       - run: ls -la cypress
       - run: ls -la cypress/integration
       - run:
