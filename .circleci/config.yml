@@ -26,8 +26,6 @@ jobs:
           paths:
             - ~/.npm
             - ~/.cache
-      - run: npm run types
-      - run: npm run stop-only
       # all other test jobs will run AFTER this build job finishes
       # to avoid reinstalling dependencies, we persist the source folder "app"
       # and the Cypress binary to workspace, which is the fastest way
@@ -35,8 +33,8 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - app
-            - .cache/Cypress
+            - .cache
+            - tmp
 
   1x-electron:
     <<: *defaults
@@ -44,9 +42,9 @@ jobs:
       - checkout
       # note: omitting caching for brevity
       # quickly install NPM dependencies
-      - npm ci
+       - run: npm ci
       # load balance all tests across 4 CI machines
-      - $(npm bin)/cypress run --parallel
+     - run: $(npm bin)/cypress run --parallel
 
   2x-electron:
     <<: *defaults
