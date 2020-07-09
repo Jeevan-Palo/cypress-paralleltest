@@ -1,5 +1,4 @@
 version: 2.1
-workflows:
 jobs:
   # give any name to job
   4x-electron:
