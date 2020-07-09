@@ -1,3 +1,4 @@
+version: 2
 jobs:
   # give any name to job
   4x-electron:
