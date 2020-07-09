@@ -49,7 +49,7 @@ jobs:
       - run: ls -la cypress
       - run: ls -la cypress/integration
       - run:
-      command: $(npm bin)/cypress run --spec 
+      command: $(npm bin)/cypress run 
 
   2x-electron:
     <<: *defaults
@@ -63,7 +63,7 @@ jobs:
       - run: ls -la cypress
       - run: ls -la cypress/integration
       - run:
-      command: $(npm bin)/cypress run --spec
+      command: $(npm bin)/cypress run --parallel
 
   4x-electron:
     <<: *defaults
@@ -75,7 +75,7 @@ jobs:
       - run: ls -la cypress
       - run: ls -la cypress/integration
       - run:
-      command: $(npm bin)/cypress run --spec --parallel
+      command: $(npm bin)/cypress run --parallel
 
   # name this job differently to have it AFTER all electron jobs on dashboard
   chrome-2x:
@@ -88,7 +88,7 @@ jobs:
       - run: ls -la cypress
       - run: ls -la cypress/integration
       - run:
-      command: $(npm bin)/cypress run --spec --parallel --group $CIRCLE_JOB --browser chrome
+      command: $(npm bin)/cypress run --parallel --browser chrome
 
 workflows:
   version: 2
