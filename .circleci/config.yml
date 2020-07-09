@@ -1,8 +1,6 @@
 version: 2.1
 jobs:
-  # give any name to job
-  4x-electron:
-    # use Cypress built Docker image with Node 10 and npm 6
+  test:    # use Cypress built Docker image with Node 10 and npm 6
     docker:
       - image: cypress/base:10
     # tells CircleCI to execute this job on 4 machines simultaneously
