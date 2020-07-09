@@ -44,11 +44,12 @@ jobs:
       # restore application and Cypress binary before running the test command
       - attach_workspace:
           at: ~/
-      - run:
-          command: npm start
-          background: true
+    
       # run all tests and pass group name (should be "1x-electron" in this case)
-      - run: npm run e2e:record -- --group $CIRCLE_JOB
+      - run: ls -la cypress
+      - run: ls -la cypress/integration
+      - run:
+      command: $(npm bin)/cypress run --spec 
 
   2x-electron:
     <<: *defaults
@@ -57,12 +58,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run:
-          command: npm start
-          background: true
       # runs Cypress test in load balancing (parallel) mode
       # and groups them in Cypress Dashboard under name "4x-electron"
-      - run: npm run e2e:record -- --parallel --group $CIRCLE_JOB
+      - run: ls -la cypress
+      - run: ls -la cypress/integration
+      - run:
+      command: $(npm bin)/cypress run --spec
 
   4x-electron:
     <<: *defaults
@@ -71,12 +72,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
+      - run: ls -la cypress
+      - run: ls -la cypress/integration
       - run:
-          command: npm start
-          background: true
-      # runs Cypress test in load balancing (parallel) mode
-      # and groups them in Cypress Dashboard under name "4x-electron"
-      - run: npm run e2e:record -- --parallel --group $CIRCLE_JOB
+      command: $(npm bin)/cypress run --spec --parallel
 
   # name this job differently to have it AFTER all electron jobs on dashboard
   chrome-2x:
@@ -86,10 +85,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
+      - run: ls -la cypress
+      - run: ls -la cypress/integration
       - run:
-          command: npm start
-          background: true
-      - run: npm run e2e:record -- --parallel --group $CIRCLE_JOB --browser chrome
+      command: $(npm bin)/cypress run --spec --parallel --group $CIRCLE_JOB --browser chrome
 
 workflows:
   version: 2
