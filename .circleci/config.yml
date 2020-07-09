@@ -41,31 +41,36 @@ jobs:
   1x-electron:
     <<: *defaults
     steps:
-   
-      # run all tests and pass group name (should be "1x-electron" in this case)
-      - run: ls -la cypress
-      - run: ls -la cypress/integration
-      command: $(npm bin)/cypress run 
+      - checkout
+      # note: omitting caching for brevity
+      # quickly install NPM dependencies
+      - npm ci
+      # load balance all tests across 4 CI machines
+      - $(npm bin)/cypress run --parallel
 
   2x-electron:
     <<: *defaults
     # tell CircleCI to execute this job on 2 machines simultaneously
     parallelism: 2
     steps:
-      # runs Cypress test in load balancing (parallel) mode
-      # and groups them in Cypress Dashboard under name "4x-electron"
-      - run: ls -la cypress
-      - run: ls -la cypress/integration
-      command: $(npm bin)/cypress run --parallel
+      - checkout
+      # note: omitting caching for brevity
+      # quickly install NPM dependencies
+      - npm ci
+      # load balance all tests across 4 CI machines
+      - $(npm bin)/cypress run --parallel
 
   4x-electron:
     <<: *defaults
     # tell CircleCI to execute this job on 4 machines simultaneously
     parallelism: 4
     steps:
-      - run: ls -la cypress
-      - run: ls -la cypress/integration
-      command: $(npm bin)/cypress run --parallel
+      - checkout
+      # note: omitting caching for brevity
+      # quickly install NPM dependencies
+      - npm ci
+      # load balance all tests across 4 CI machines
+      - $(npm bin)/cypress run --parallel
 
   # name this job differently to have it AFTER all electron jobs on dashboard
   chrome-2x:
@@ -73,10 +78,12 @@ jobs:
     # execute this job on 2 CI machines
     parallelism: 2
     steps:
-      - run: ls -la cypress
-      - run: ls -la cypress/integration
-      - run:
-      command: $(npm bin)/cypress run --parallel --browser chrome
+      - checkout
+      # note: omitting caching for brevity
+      # quickly install NPM dependencies
+      - npm ci
+      # load balance all tests across 4 CI machines
+      - $(npm bin)/cypress run --parallel --browser chrome
 
 workflows:
   version: 2
