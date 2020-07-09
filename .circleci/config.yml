@@ -43,7 +43,7 @@ jobs:
       # note: omitting caching for brevity
       # quickly install NPM dependencies
       # load balance all tests across 4 CI machines
-      - $(npm bin)/cypress run --parallel
+      - cypress run --parallel
 
   2x-electron:
     <<: *defaults
