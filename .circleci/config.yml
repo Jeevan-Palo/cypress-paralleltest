@@ -165,24 +165,5 @@ workflows:
       # and this group will load balance all specs
       # and use Chrome browser to run them
       - chrome-2x:
-           - cypress/install
-              parallel: true        # load balance all tests
-              parallelism: 3        # across 3 machines
-              group: '3x-electron'  # name this group
-              #start: 'npm start'    # start server before running tests
-
-      # run on 2 machines using Chrome browser
-      - cypress/run:
-          # job will use workspace with code and dependencies
-          # installed by the "install" job
           requires:
             - build
-            - cypress/install
-          # use executor with Chrome installed
-          executor: cypress/browsers-chrome69
-          # use browser "chrome" for running tests
-          browser: chrome
-          parallel: true
-          parallelism: 2
-          group: '2x-chrome'
-          start: 'npm start'
