@@ -46,6 +46,10 @@ jobs:
       #- npm cypress run --parallel
       - attach_workspace:
           at: ~/
+          
+      - run:
+          name: Install dependencies
+          command: npm ci
       - run:
           name: Running cypress tests
           command: $(npm bin)/cypress run
