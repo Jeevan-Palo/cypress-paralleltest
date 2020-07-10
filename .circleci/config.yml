@@ -90,11 +90,24 @@ jobs:
     parallelism: 4
     steps:
       - checkout
-      # note: omitting caching for brevity
-      # quickly install NPM dependencies
-      - npm ci
-      # load balance all tests across 4 CI machines
-      - $(npm bin)/cypress run --parallel
+      # find compatible cache from previous build,
+      # it should have same dependencies installed from package.json checksum
+      - restore_cache:
+          keys:
+            - cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - attach_workspace:
+          at: ~/
+          
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Running cypress tests
+          command: $(npm bin)/cypress run --parallel
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
   # name this job differently to have it AFTER all electron jobs on dashboard
   chrome-2x:
