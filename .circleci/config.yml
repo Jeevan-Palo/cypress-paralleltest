@@ -110,12 +110,13 @@ jobs:
           path: cypress/screenshots
 
   # name this job differently to have it AFTER all electron jobs on dashboard
+  # name this job differently to have it AFTER all electron jobs on dashboard
   chrome-2x:
     <<: *defaults
     # execute this job on 2 CI machines
     parallelism: 2
     steps:
-       - checkout
+     - checkout
       # find compatible cache from previous build,
       # it should have same dependencies installed from package.json checksum
       - restore_cache:
