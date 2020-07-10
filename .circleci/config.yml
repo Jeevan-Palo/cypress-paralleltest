@@ -39,11 +39,12 @@ jobs:
   1x-electron:
     <<: *defaults
     steps:
-      #- checkout
-      # note: omitting caching for brevity
-      # quickly install NPM dependencies
-      # load balance all tests across 4 CI machines
-      #- npm cypress run --parallel
+      - checkout
+      # find compatible cache from previous build,
+      # it should have same dependencies installed from package.json checksum
+      - restore_cache:
+          keys:
+            - cache-{{ .Branch }}-{{ checksum "package.json" }}
       - attach_workspace:
           at: ~/
           
