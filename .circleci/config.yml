@@ -116,7 +116,7 @@ jobs:
     # execute this job on 2 CI machines
     parallelism: 2
     steps:
-     - checkout
+      - checkout
       # find compatible cache from previous build,
       # it should have same dependencies installed from package.json checksum
       - restore_cache:
