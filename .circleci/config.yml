@@ -63,13 +63,26 @@ jobs:
     <<: *defaults
     # tell CircleCI to execute this job on 2 machines simultaneously
     parallelism: 2
-    steps:
+    steps:    
       - checkout
-      # note: omitting caching for brevity
-      # quickly install NPM dependencies
-      - npm ci
-      # load balance all tests across 4 CI machines
-      - $(npm bin)/cypress run --parallel
+      # find compatible cache from previous build,
+      # it should have same dependencies installed from package.json checksum
+      - restore_cache:
+          keys:
+            - cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - attach_workspace:
+          at: ~/
+          
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Running cypress tests
+          command: $(npm bin)/cypress run --parallel
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
   4x-electron:
     <<: *defaults
@@ -89,12 +102,25 @@ jobs:
     # execute this job on 2 CI machines
     parallelism: 2
     steps:
-      - checkout
-      # note: omitting caching for brevity
-      # quickly install NPM dependencies
-      - npm ci
-      # load balance all tests across 4 CI machines
-      - $(npm bin)/cypress run --parallel --browser chrome
+       - checkout
+      # find compatible cache from previous build,
+      # it should have same dependencies installed from package.json checksum
+      - restore_cache:
+          keys:
+            - cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - attach_workspace:
+          at: ~/
+          
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Running cypress tests
+          command: $(npm bin)/cypress run --parallel --browser chrome
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
 workflows:
   version: 2
