@@ -46,8 +46,6 @@ jobs:
       #- npm cypress run --parallel
       - attach_workspace:
           at: ~/
-      - run: ls -la cypress
-      - run: ls -la cypress/integration
       - run:
           name: Running cypress tests
           command: $(npm bin)/cypress run
