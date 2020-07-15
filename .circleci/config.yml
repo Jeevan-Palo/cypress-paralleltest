@@ -78,7 +78,7 @@ jobs:
           command: npm ci
       - run:
           name: Running cypress tests
-          command: $(npm bin)/cypress run --record  --key 66eab302-f13f-468a-bd32-7e81fa8da47e  --group 2x-electron --parallel
+          command: $(npm bin)/cypress run --record --group 2x-electron --parallel
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
@@ -103,7 +103,7 @@ jobs:
           command: npm ci
       - run:
           name: Running cypress tests
-          command: $(npm bin)/cypress run --record  --key 66eab302-f13f-468a-bd32-7e81fa8da47e  --group 4x-electron --parallel
+          command: $(npm bin)/cypress run --record --group 4x-electron --parallel
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
@@ -130,7 +130,7 @@ jobs:
           command: npm ci
       - run:
           name: Running cypress tests
-          command: $(npm bin)/cypress run --record  --key 66eab302-f13f-468a-bd32-7e81fa8da47e --parallel --browser chrome
+          command: $(npm bin)/cypress run --record --parallel --browser chrome
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
